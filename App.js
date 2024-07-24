@@ -22,7 +22,7 @@ export default function App() {
         <Button title='Add Goal' color="green" onPress={AddButtonGoalText} ></Button>
       </View>
       <View style={styles.goalListContainer}>
-        <Text>List of Goals...</Text>
+        <Text>List of Goals for My Project</Text>
         <View>{courseGoals.map((eachgoal)=> <Text style={styles.goalItem} key={eachgoal}>{eachgoal}</Text>)}</View>
       </View>
     </View>
