@@ -1,29 +1,61 @@
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
-import { useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+  ScrollView,
+  FlatList,
+} from "react-native";
+import { useState } from "react";
 
 export default function App() {
+  const [AddGoalText, SetGoalText] = useState("");
+  const [courseGoals, SetCourseGoals] = useState([]);
 
-  const [AddGoalText,SetGoalText]=useState('');
-  const [courseGoals,SetCourseGoals] = useState([]);
-
-  function goalInputHandler(enteredText){
-    SetGoalText(enteredText)
+  function goalInputHandler(enteredText) {
+    SetGoalText(enteredText);
   }
 
-  function AddButtonGoalText(){
+  function AddButtonGoalText() {
     // SetCourseGoals([... courseGoals,AddGoalText]);
-    SetCourseGoals(currentCourseGoals => [... currentCourseGoals,AddGoalText]);
+    SetCourseGoals((currentCourseGoals) => [
+      ...currentCourseGoals,
+      { text: AddGoalText, Indexnumber: Math.random().toString() },
+    ]);
   }
 
   return (
     <View style={styles.appcontainer}>
       <View style={styles.inputAreaView}>
-        <TextInput style={styles.textInput} placeholder='Enter Your Goal' onChangeText={goalInputHandler}></TextInput>
-        <Button title='Add Goal' color="green" onPress={AddButtonGoalText} ></Button>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Enter Your Goal"
+          onChangeText={goalInputHandler}
+        ></TextInput>
+        <Button
+          title="Add Goal"
+          color="#503af7"
+          onPress={AddButtonGoalText}
+        ></Button>
       </View>
       <View style={styles.goalListContainer}>
-        <Text>List of Goals for My Project</Text>
-        <View>{courseGoals.map((eachgoal)=> <Text style={styles.goalItem} key={eachgoal}>{eachgoal}</Text>)}</View>
+        <Text style={styles.headingtext}>List of Goals</Text>
+        <FlatList
+          data={courseGoals}
+          renderItem={(EachItem) => {
+            return (
+              <View>
+                <View style={styles.goalItem}>
+                  <Text style={styles.goaltext}>{EachItem.item.text}</Text>
+                </View>
+              </View>
+            );
+          }}
+          keyExtractor={(item,Indexnumber)=>{
+            return item.Indexnumber
+          }}
+        ></FlatList>
       </View>
     </View>
   );
@@ -38,8 +70,8 @@ const styles = StyleSheet.create({
   },
   inputAreaView: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 24,
     borderBottomWidth: 2,
@@ -51,17 +83,26 @@ const styles = StyleSheet.create({
     width: "70%",
     marginRight: 10,
     padding: 7,
+    fontSize: 16,
   },
   goalListContainer: {
-    flex: 6
+    flex: 6,
   },
-  goalItem:{
-    marginVertical:8,
-    padding: 16,
+  goalItem: {
+    width: "96%",
+    marginVertical: 8,
+    padding: 14,
     borderRadius: 8,
     backgroundColor: "#503af7",
+    alignItems: "baseline",
+  },
+  goaltext: {
     color: "white",
-    fontSize: 18
-  }
-
+    fontSize: 18,
+  },
+  headingtext: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
 });
