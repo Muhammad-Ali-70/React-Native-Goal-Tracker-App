@@ -1,59 +1,32 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  TextInput,
-  ScrollView,
-  FlatList,
-} from "react-native";
+import { StyleSheet, Text, View, FlatList } from "react-native";
 import { useState } from "react";
+import GoalItem from "./components/Goal_Item";
+import GoalInputComponent from "./components/Goal_Input";
 
 export default function App() {
-  const [AddGoalText, SetGoalText] = useState("");
   const [courseGoals, SetCourseGoals] = useState([]);
 
-  function goalInputHandler(enteredText) {
-    SetGoalText(enteredText);
-  }
 
-  function AddButtonGoalText() {
+  function AddButtonGoalText(enteredText) {
     // SetCourseGoals([... courseGoals,AddGoalText]);
     SetCourseGoals((currentCourseGoals) => [
       ...currentCourseGoals,
-      { text: AddGoalText, Indexnumber: Math.random().toString() },
+      { text: enteredText, Indexnumber: Math.random().toString() },
     ]);
   }
 
   return (
     <View style={styles.appcontainer}>
-      <View style={styles.inputAreaView}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Enter Your Goal"
-          onChangeText={goalInputHandler}
-        ></TextInput>
-        <Button
-          title="Add Goal"
-          color="#503af7"
-          onPress={AddButtonGoalText}
-        ></Button>
-      </View>
+      <GoalInputComponent AddGoal={AddButtonGoalText} />
       <View style={styles.goalListContainer}>
         <Text style={styles.headingtext}>List of Goals</Text>
         <FlatList
           data={courseGoals}
           renderItem={(EachItem) => {
-            return (
-              <View>
-                <View style={styles.goalItem}>
-                  <Text style={styles.goaltext}>{EachItem.item.text}</Text>
-                </View>
-              </View>
-            );
+            return <GoalItem PassedText={EachItem.item.text} />;
           }}
-          keyExtractor={(item,Indexnumber)=>{
-            return item.Indexnumber
+          keyExtractor={(item, Indexnumber) => {
+            return item.Indexnumber;
           }}
         ></FlatList>
       </View>
@@ -88,18 +61,7 @@ const styles = StyleSheet.create({
   goalListContainer: {
     flex: 6,
   },
-  goalItem: {
-    width: "96%",
-    marginVertical: 8,
-    padding: 14,
-    borderRadius: 8,
-    backgroundColor: "#503af7",
-    alignItems: "baseline",
-  },
-  goaltext: {
-    color: "white",
-    fontSize: 18,
-  },
+
   headingtext: {
     fontSize: 20,
     fontWeight: "bold",
