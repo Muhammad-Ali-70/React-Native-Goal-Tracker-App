@@ -7,4 +7,6 @@ This repository contains the code and projects developed while following the [Re
 3. Exploring React Native basics and advanced features
 4. Utilizing key mobile app features like Google Maps and the device camera
 
+**All the course Modules/Apps are apprehended in their specific Branches.**
+
 Feel free to explore the code and contribute!
