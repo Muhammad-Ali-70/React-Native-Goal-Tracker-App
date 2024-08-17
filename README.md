@@ -1,4 +1,5 @@
-# React Native - The Practical Guide [2024]
+# React Native - The Practical Guide [2024] Course 
+
 
 # Goal Tracker App 🎯
 
